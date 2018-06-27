@@ -8,36 +8,55 @@ if exists("b:current_syntax")
     finish
 endif
 
-" Keywords
-syn keyword k_flowControl if elif else for do while match switch case break continue pass return
-syn keyword k_structure class extends is tool signal func static const enum var onready export setget breakpoint preload yield assert remote master slave sync
-syn keyword k_constants self true false PI TAU INF NAN
+syn keyword gdKeyword if elif else 
+syn keyword gdKeyword for do while
+syn keyword gdKeyword is match
+syn keyword gdKeyword switch case
+syn keyword gdKeyword break continue
+syn keyword gdKeyword pass return
+syn keyword gdKeyword class extends func enum nextgroup=gdDefinition skipwhite
+syn match   gdDefintion '[\w]+[\d\w]' display contained
 
-syn keyword k_todo contained TODO HACK
+syn keyword gdKeyword tool export
+syn keyword gdKeyword signal
+syn keyword gdKeyword static const var
+syn keyword gdKeyword onready
+syn keyword gdKeyword self
+syn keyword gdKeyword setget breakpoint preload yield assert remote master slave sync
+
+syn keyword gdBoolean true false
+syn keyword gdConstant PI TAU INF NAN
+
+syn keyword gdTodo contained TODO HACK
 
 " Matches
-syn match m_lit_string '\".*\"'
-syn match m_lit_string '\'.*\''
+syn match gdString '\".*\"'
+syn match gdString '\'.*\''
 
-syn match m_lit_number '[+-]?\d+'
-syn match m_lit_number '[+-]?\d+\.\d+'
+syn match gdNumber '[+-]?\d+'
+syn match gdNumber '[+-]?\d+\.\d+'
 
-syn match m_comment '#.*$'
-syn match m_todo_note '#.*$' contains=todo
+
+" syn match m_function_call '[\w]+[\d\w]('
+
+syn match gdComment '#.*$' contains=todo
 
 " Regions
-"syn region syntaxElementRegion start='x' end='y'
+syn region r_func_definition start='func' end=':' contains=gdDefinition
 
 let b:current_syntax = "godot"
 
-hi def link k_flowControl       Keyword
-hi def link k_structure         Keyword
-hi def link k_constants         Constant
-hi def link k_todo              Todo
+hi def link gdKeyword         Keyword
+hi def link gdConstant         Constant
 
-hi def link m_lit_string        Constant
-hi def link m_lit_number        Constant
+hi def link gdDefinition        Constant
 
-hi def link m_comment           Comment
-hi def link m_todo_note         Comment
+hi def link gdComment           Comment
+hi def link gdTodo              Todo
+
+hi def link gdString        Constant
+hi def link gdNumber        Constant
+"hi def link m_function_call     Function
+
+hi def link m_func_definition   Constant
 
